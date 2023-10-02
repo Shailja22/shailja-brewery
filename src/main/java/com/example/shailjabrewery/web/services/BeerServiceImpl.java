@@ -1,7 +1,9 @@
 package com.example.shailjabrewery.web.services;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 import com.example.shailjabrewery.web.model.BeerDto;
@@ -11,17 +13,25 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class BeerServiceImpl implements BeerService {
+	
+	 private final Map<UUID, BeerDto> beerStore = new ConcurrentHashMap<>(); // In-memory storage
+	 
 	@Override
 	public BeerDto getBeerById(UUID beerId) {
 		return BeerDto.builder().id(UUID.randomUUID())
 				.beerName("Carlsberg")
-				.beerStyle("Pale Ale")
+				
 				.build();
 	}
 
 	@Override
 	public BeerDto saveNewBeer(BeerDto beer) {
-		return beer;
+		UUID beerId = UUID.randomUUID();
+		beer.setId(beerId);
+		
+		beerStore.put(beerId, beer);
+
+        return beer;
 	}
 
 	@Override

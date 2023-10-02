@@ -8,7 +8,7 @@ import com.example.shailjabrewery.web.model.Customer;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-
+ 
 	@Override
 	public Customer getCustomerById(UUID id) {
 		

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.shailjabrewery.web.model.BeerDto;
 import com.example.shailjabrewery.web.services.BeerService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RequestMapping("/api/v1/beer")
 @RestController
 public class BeerController {
@@ -29,6 +32,7 @@ public class BeerController {
     }
 
     @GetMapping({"/{beerId}"})
+    @ApiOperation(value = "Get Beer Details")
     public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId){
 
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
@@ -39,10 +43,10 @@ public class BeerController {
 
         BeerDto save = beerService.saveNewBeer(beer);
         
-        HttpHeaders headers = new HttpHeaders();
+       // HttpHeaders headers = new HttpHeaders();
         //TODO - add hostname to url
-        headers.add("Location","/api/v1/beer" + save.getId().toString());
-        return new ResponseEntity<>(headers,HttpStatus.CREATED);
+        //headers.add("Location","/api/v1/beer" + save.getId().toString());
+        return new ResponseEntity<>(save,HttpStatus.CREATED);
         
     }
     
