@@ -20,7 +20,6 @@ public class BeerServiceImpl implements BeerService {
 	public BeerDto getBeerById(UUID beerId) {
 		return BeerDto.builder().id(UUID.randomUUID())
 				.beerName("Carlsberg")
-				
 				.build();
 	}
 
@@ -35,9 +34,10 @@ public class BeerServiceImpl implements BeerService {
 	}
 
 	@Override
-	public void updateBeer(UUID beerId, BeerDto beer) {
+	public BeerDto updateBeer(UUID beerId, BeerDto beer) {
 		// Retrieve the existing BeerDto by id
         BeerDto existingBeerOptional = getBeerById(beerId);
+        BeerDto updatedBeer = new BeerDto() ;
 
         if (existingBeerOptional != null) {
             
@@ -47,8 +47,9 @@ public class BeerServiceImpl implements BeerService {
         	existingBeerOptional.setUpc(beer.getUpc());
 
             // Save the updated BeerDto back to your data source
-            saveNewBeer(existingBeerOptional);
+          updatedBeer =  saveNewBeer(existingBeerOptional);
     }
+        return updatedBeer;
 
 		
 	}
